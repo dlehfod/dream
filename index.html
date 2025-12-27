@@ -531,17 +531,17 @@
             min-height: 100vh;
         }
 
-        /* 몽환적인 배경 효과 */
+        /* 몽환적인 배경 효과 - 성능 최적화 */
         .orb {
-            position: fixed;
+            position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(60px);
             z-index: 0;
-            animation: float 10s infinite alternate;
             pointer-events: none;
+            will-change: transform;
         }
-        .orb-1 { width: 300px; height: 300px; background: rgba(106, 17, 203, 0.3); top: -50px; left: -50px; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(37, 117, 252, 0.2); bottom: -100px; right: -100px; }
+        .orb-1 { width: 250px; height: 250px; background: rgba(106, 17, 203, 0.2); top: -50px; left: -50px; }
+        .orb-2 { width: 300px; height: 300px; background: rgba(37, 117, 252, 0.15); bottom: -100px; right: -100px; }
 
         @keyframes float {
             0% { transform: translate(0, 0); }
@@ -695,195 +695,75 @@
         .prophecy .result-title { color: var(--accent-gold); }
 
         .result-content {
-            font-size: 1rem;
-            line-height: 2.2;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        /* ========== 결과 텍스트 강조 스타일 ========== */
-        
-        /* strong 태그 - 매우 눈에 띄게 */
-        .result-content strong,
-        .result-content b {
-            font-weight: 700;
-            padding: 1px 6px;
-            border-radius: 4px;
-            margin: 0 2px;
-        }
-
-        .psychology .result-content strong,
-        .psychology .result-content b {
-            color: #e0b3ff;
-            background: linear-gradient(135deg, rgba(187, 134, 252, 0.25), rgba(106, 17, 203, 0.15));
-            text-shadow: 0 0 15px rgba(187, 134, 252, 0.6);
-            border-bottom: 2px solid rgba(187, 134, 252, 0.5);
-        }
-
-        .prophecy .result-content strong,
-        .prophecy .result-content b {
-            color: #ffe082;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(255, 179, 0, 0.15));
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-            border-bottom: 2px solid rgba(212, 175, 55, 0.5);
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* 문단 스타일 */
         .result-content p {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
-        /* 문단 구분자 */
-        .result-paragraph {
-            display: block;
-            margin-bottom: 20px;
-            padding-left: 15px;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        /* 강조 텍스트 - 심플하게 */
+        .result-content strong,
+        .result-content b {
+            font-weight: 600;
         }
 
-        .psychology .result-paragraph {
-            border-left-color: rgba(187, 134, 252, 0.3);
+        .psychology .result-content strong,
+        .psychology .result-content b {
+            color: var(--accent-purple);
         }
 
-        .prophecy .result-paragraph {
-            border-left-color: rgba(212, 175, 55, 0.3);
+        .prophecy .result-content strong,
+        .prophecy .result-content b {
+            color: var(--accent-gold);
         }
 
-        /* 메인 제목 - 박스 스타일 */
-        .result-main-title {
-            display: block;
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 18px 25px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-        }
-
-        .psychology .result-main-title {
-            background: linear-gradient(135deg, rgba(187, 134, 252, 0.2), rgba(106, 17, 203, 0.15));
-            color: #d4b3ff;
-            border: 1px solid rgba(187, 134, 252, 0.4);
-            box-shadow: 0 0 20px rgba(187, 134, 252, 0.2);
-        }
-
-        .prophecy .result-main-title {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(255, 179, 0, 0.15));
-            color: #ffe082;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
-
-        /* 소제목 스타일 */
+        /* 소제목 - 미니멀 */
         .result-subtitle {
             display: block;
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin: 28px 0 14px 0;
-            padding: 10px 15px;
-            border-radius: 8px;
-            position: relative;
+            margin: 20px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .psychology .result-subtitle {
-            color: #d4b3ff;
-            background: rgba(187, 134, 252, 0.1);
-            border-left: 4px solid var(--accent-purple);
+            color: var(--accent-purple);
         }
 
         .prophecy .result-subtitle {
-            color: #ffe082;
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid var(--accent-gold);
+            color: var(--accent-gold);
         }
 
-        /* 조언/결론 박스 */
-        .result-advice {
-            display: block;
-            margin: 25px 0;
-            padding: 20px;
-            border-radius: 12px;
-            position: relative;
+        /* 길몽/흉몽 - 심플 */
+        .badge-good {
+            color: #4ade80;
+            font-weight: 700;
         }
 
-        .psychology .result-advice {
-            background: linear-gradient(135deg, rgba(187, 134, 252, 0.12), rgba(106, 17, 203, 0.08));
-            border: 1px solid rgba(187, 134, 252, 0.25);
+        .badge-bad {
+            color: #f87171;
+            font-weight: 700;
         }
 
-        .prophecy .result-advice {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(255, 179, 0, 0.08));
-            border: 1px solid rgba(212, 175, 55, 0.25);
-        }
-
-        .result-advice::before {
-            content: '💡';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            font-size: 1.2rem;
-            background: var(--bg-deep);
-            padding: 0 8px;
+        .badge-warning {
+            color: #fbbf24;
+            font-weight: 700;
         }
 
         /* 면책조항 */
         .result-disclaimer {
             display: block;
-            margin-top: 35px;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
             text-align: center;
-            font-style: italic;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-
-        /* 구분선 */
-        .result-divider {
-            display: block;
-            width: 80px;
-            height: 2px;
-            margin: 30px auto;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            border-radius: 2px;
-        }
-
-        /* 길몽/흉몽 배지 */
-        .badge-good {
-            display: inline-block;
-            padding: 4px 12px;
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.15));
-            color: #4ade80;
-            border: 1px solid rgba(74, 222, 128, 0.4);
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .badge-bad {
-            display: inline-block;
-            padding: 4px 12px;
-            background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(239, 68, 68, 0.15));
-            color: #f87171;
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .badge-warning {
-            display: inline-block;
-            padding: 4px 12px;
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.15));
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
         }
 
         /* 에러 메시지 */
@@ -911,7 +791,23 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* 모바일 대응 */
+        /* 모바일 성능 최적화 */
         @media (max-width: 768px) {
+            .orb {
+                display: none; /* 모바일에서 blur orb 제거 */
+            }
+            .symbol-card-inner {
+                backdrop-filter: none;
+                background: rgba(20, 20, 40, 0.8);
+            }
+            .dream-form {
+                backdrop-filter: none;
+                background: rgba(20, 20, 40, 0.9);
+            }
+            .result-card {
+                backdrop-filter: none;
+                background: rgba(20, 20, 40, 0.9);
+            }
             .hero {
                 min-height: 100vh;
                 padding-top: 60px;
@@ -1413,117 +1309,34 @@
         }
 
         /**
-         * 결과 텍스트 포맷팅 함수
+         * 결과 텍스트 포맷팅 함수 - 심플 버전
          */
         function formatResultText(text, type) {
             if (!text) return '';
 
             let formatted = text;
 
-            // 0. 기존 HTML 태그 이스케이프 방지를 위해 <strong> 태그 보존
-            // (Gemini가 이미 <strong> 태그를 넣었을 수 있음)
+            // 1. **마크다운 강조**를 <strong>으로 변환
+            formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-            // 1. **마크다운 강조**를 <strong>으로 변환 (가장 먼저)
-            formatted = formatted.replace(
-                /\*\*([^*]+)\*\*/g,
-                '<strong>$1</strong>'
-            );
+            // 2. 소제목 (■ 기호)
+            formatted = formatted.replace(/^[■●▶◆]\s*(.+)$/gm, '<span class="result-subtitle">$1</span>');
 
-            // 2. 메인 제목 감지 (첫 줄이나 "제목:" 패턴)
-            // "당신 무의식의 비밀 지도" 같은 형태
-            formatted = formatted.replace(
-                /^["「『]([^"」』\n]+)["」』]/gm,
-                '<span class="result-main-title">$1</span>'
-            );
+            // 3. 길몽/흉몽/경고몽
+            formatted = formatted.replace(/(길몽|吉夢)/g, '<span class="badge-good">$1</span>');
+            formatted = formatted.replace(/(흉몽|凶夢)/g, '<span class="badge-bad">$1</span>');
+            formatted = formatted.replace(/(경고몽|警告夢)/g, '<span class="badge-warning">$1</span>');
 
-            // 제목: 형태
+            // 4. 면책조항
             formatted = formatted.replace(
-                /^제목:\s*["「『]?([^"」』\n]+)["」』]?$/gm,
-                '<span class="result-main-title">$1</span>'
-            );
-
-            // 3. 소제목 패턴들
-            // ■, ●, ▶, ◆, ★ 등으로 시작
-            formatted = formatted.replace(
-                /^[■●▶◆◇★☆►▪•]\s*(.+)$/gm,
-                '<span class="result-subtitle">$1</span>'
-            );
-
-            // 【제목】 형태
-            formatted = formatted.replace(
-                /【([^】]+)】/g,
-                '<span class="result-subtitle">$1</span>'
-            );
-
-            // [제목] 형태
-            formatted = formatted.replace(
-                /^\[([^\]]+)\]$/gm,
-                '<span class="result-subtitle">$1</span>'
-            );
-
-            // 숫자. **제목** 또는 숫자. 제목
-            formatted = formatted.replace(
-                /^(\d+)\.\s*<strong>([^<]+)<\/strong>/gm,
-                '<span class="result-subtitle">$1. $2</span>'
-            );
-
-            formatted = formatted.replace(
-                /^(\d+)\.\s+([가-힣]+[가-힣\s]*:)/gm,
-                '<span class="result-subtitle">$1. $2</span>'
-            );
-
-            // "### 제목" 마크다운 헤더
-            formatted = formatted.replace(
-                /^#{1,3}\s+(.+)$/gm,
-                '<span class="result-subtitle">$1</span>'
-            );
-
-            // 4. 길몽/흉몽/경고몽 배지
-            formatted = formatted.replace(
-                /(길몽|吉夢)/g,
-                '<span class="badge-good">$1</span>'
-            );
-            formatted = formatted.replace(
-                /(흉몽|凶夢)/g,
-                '<span class="badge-bad">$1</span>'
-            );
-            formatted = formatted.replace(
-                /(경고몽|警告夢)/g,
-                '<span class="badge-warning">$1</span>'
-            );
-
-            // 5. 조언/결론 영역 감지
-            formatted = formatted.replace(
-                /^(결론 및[^:\n]*:|심리적 조언:|행동 지침:|조언:)\s*/gm,
-                '<span class="result-advice"><strong>$1</strong> '
-            );
-
-            // 6. 면책조항
-            formatted = formatted.replace(
-                /(이 해석은 꿈의 상징과[^.]*\.)/g,
-                '<span class="result-disclaimer">$1</span>'
-            );
-            formatted = formatted.replace(
-                /(최종적인 선택과 판단은[^.]*\.)/g,
+                /(이 해석은[^.]*최종적인 선택과 판단은[^.]*\.)/g,
                 '<span class="result-disclaimer">$1</span>'
             );
 
-            // 7. 구분선
-            formatted = formatted.replace(
-                /^[-─━=]{3,}$/gm,
-                '<span class="result-divider"></span>'
-            );
-            formatted = formatted.replace(
-                /^\*{3,}$/gm,
-                '<span class="result-divider"></span>'
-            );
-
-            // 8. 빈 줄을 문단 구분으로
+            // 5. 줄바꿈 처리
             formatted = formatted.replace(/\n\n+/g, '</p><p>');
             formatted = '<p>' + formatted + '</p>';
             formatted = formatted.replace(/<p><\/p>/g, '');
-
-            // 9. 단일 줄바꿈을 <br>로
             formatted = formatted.replace(/\n/g, '<br>');
 
             return formatted;
