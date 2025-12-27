@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus Twin | 꿈 분석소</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050510;
+            --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-gold: #d4af37;
+            --accent-purple: #bb86fc;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================
+           히어로 섹션 - 몽환적인 첫 화면
+        ========================================== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1b2838 0%, #090a0f 100%);
+        }
+
+        /* 별 배경 */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* 달 */
+        .moon {
+            position: absolute;
+            top: 12%;
+            right: 18%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #fffde7, #ffd54f, #ffb300);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 100px rgba(255, 215, 0, 0.2),
+                inset -15px -10px 20px rgba(0,0,0,0.1);
+            animation: moonGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes moonGlow {
+            0% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.4), 0 0 100px rgba(255, 215, 0, 0.2); }
+            100% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.6), 0 0 140px rgba(255, 215, 0, 0.3); }
+        }
+
+        /* 떠다니는 빛 입자 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(187, 134, 252, 0.5);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* 히어로 콘텐츠 */
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 0 30px;
+            padding-bottom: 120px; /* 스크롤 인디케이터와 간격 확보 */
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 16px;
+            letter-spacing: 6px;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+        }
+
+        /* 장식선 */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .divider-symbol {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+        }
+
+        /* 히어로 설명 */
+        .hero-description {
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .hero-quote {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.15rem;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .hero-author {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        /* 몽환적 메시지 섹션 */
+        .dream-message {
+            margin-top: 45px;
+            position: relative;
+        }
+
+        .dream-message-inner {
+            position: relative;
+            padding: 35px 30px;
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.03) 0%, 
+                rgba(212, 175, 55, 0.02) 50%,
+                rgba(106, 17, 203, 0.03) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .dream-message-inner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(187, 134, 252, 0.08) 0%, transparent 50%);
+            animation: auroraShift 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10%, 10%) rotate(120deg); }
+            66% { transform: translate(-10%, 5%) rotate(240deg); }
+        }
+
+        .dream-text {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1rem;
+            line-height: 2.2;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dream-text .line {
+            display: block;
+            opacity: 0;
+            animation: lineReveal 1s ease forwards;
+        }
+
+        .dream-text .line:nth-child(1) { animation-delay: 0.3s; }
+        .dream-text .line:nth-child(2) { animation-delay: 0.6s; }
+
+        @keyframes lineReveal {
+            from { 
+                opacity: 0; 
+                transform: translateY(10px);
+                filter: blur(4px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .dream-text .highlight {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .dream-text .glow-word {
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 0 20px rgba(187, 134, 252, 0.5),
+                         0 0 40px rgba(187, 134, 252, 0.3);
+        }
+
+        /* 융합 섹션 - 재디자인 */
+        .fusion-section {
+            margin-top: 55px;
+            perspective: 1000px;
+        }
+
+        .fusion-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* 추상적인 심볼 카드 */
+        .symbol-card {
+            width: 110px;
+            height: 140px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .symbol-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .symbol-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(160deg, 
+                rgba(255,255,255,0.15) 0%, 
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.05) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .symbol-card-inner {
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 심볼 아이콘 - SVG 스타일 */
+        .symbol-icon {
+            width: 44px;
+            height: 44px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .symbol-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke-width: 1.2;
+            fill: none;
+        }
+
+        .symbol-card.psychology .symbol-icon svg {
+            stroke: var(--accent-purple);
+            filter: drop-shadow(0 0 8px rgba(187, 134, 252, 0.5));
+        }
+
+        .symbol-card.fortune .symbol-icon svg {
+            stroke: var(--accent-gold);
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));
+        }
+
+        /* 호버 시 글로우 */
+        .symbol-card.psychology:hover .symbol-icon svg {
+            filter: drop-shadow(0 0 15px rgba(187, 134, 252, 0.8));
+        }
+
+        .symbol-card.fortune:hover .symbol-icon svg {
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
+        }
+
+        /* 오라 링 효과 */
+        .symbol-aura {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: auraBreath 4s ease-in-out infinite;
+        }
+
+        .symbol-card.psychology .symbol-aura {
+            background: radial-gradient(circle, rgba(187, 134, 252, 0.3) 0%, transparent 70%);
+        }
+
+        .symbol-card.fortune .symbol-aura {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+            animation-delay: 2s;
+        }
+
+        @keyframes auraBreath {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+        }
+
+        .symbol-label {
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        .symbol-card.psychology .symbol-label { color: var(--accent-purple); }
+        .symbol-card.fortune .symbol-label { color: var(--accent-gold); }
+
+        .symbol-sublabel {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 0.75rem;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
+        /* 연결 요소 - 미니멀한 라인 */
+        .fusion-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 0 10px;
+        }
+
+        .connector-line {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                rgba(187, 134, 252, 0.6), 
+                rgba(255, 255, 255, 0.3),
+                rgba(212, 175, 55, 0.6));
+            position: relative;
+        }
+
+        .connector-line::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: connectorPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes connectorPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+        }
+
+        .connector-symbol {
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.8;
+        }
+
+        /* 태그라인 */
+        .fusion-tagline {
+            text-align: center;
+            margin-top: 35px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .fusion-tagline span {
+            background: linear-gradient(135deg, 
+                rgba(187, 134, 252, 0.9) 0%, 
+                rgba(255, 255, 255, 0.7) 50%, 
+                rgba(212, 175, 55, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 스크롤 인디케이터 */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            transform: rotate(45deg);
+            opacity: 0.6;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(8px); }
+            60% { transform: translateX(-50%) translateY(4px); }
+        }
+
+        /* ==========================================
+           메인 섹션
+        ========================================== */
+        .main-section {
+            background: var(--bg-gradient);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* 몽환적인 배경 효과 */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 10s infinite alternate;
+            pointer-events: none;
+        }
+        .orb-1 { width: 300px; height: 300px; background: rgba(106, 17, 203, 0.3); top: -50px; left: -50px; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(37, 117, 252, 0.2); bottom: -100px; right: -100px; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 섹션 인트로 */
+        .section-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-intro h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.6rem;
+            color: var(--accent-purple);
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .section-intro p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 입력 폼 섹션 */
+        .dream-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .form-group { margin-bottom: 25px; }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 16px;
+            color: #fff;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.4);
+        }
+
+        .btn-analyze:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 로딩 애니메이션 */
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 50px 0;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-gold);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* 결과 섹션 */
+        #result {
+            display: none;
+            margin-top: 50px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .result-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid;
+        }
+
+        .psychology { border-color: var(--accent-purple); }
+        .prophecy { border-color: var(--accent-gold); }
+
+        .result-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .psychology .result-title { color: var(--accent-purple); }
+        .prophecy .result-title { color: var(--accent-gold); }
+
+        .result-content {
+            font-size: 1rem;
+            line-height: 2.2;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ========== 결과 텍스트 강조 스타일 ========== */
+        
+        /* strong 태그 - 매우 눈에 띄게 */
+        .result-content strong,
+        .result-content b {
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+
+        .psychology .result-content strong,
+        .psychology .result-content b {
+            color: #e0b3ff;
+            background: linear-gradient(135deg, rgba(187, 134, 252, 0.25), rgba(106, 17, 203, 0.15));
+            text-shadow: 0 0 15px rgba(187, 134, 252, 0.6);
+            border-bottom: 2px solid rgba(187, 134, 252, 0.5);
+        }
+
+        .prophecy .result-content strong,
+        .prophecy .result-content b {
+            color: #ffe082;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(255, 179, 0, 0.15));
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.5);
+        }
+
+        /* 문단 스타일 */
+        .result-content p {
+            margin-bottom: 18px;
+        }
+
+        /* 문단 구분자 */
+        .result-paragraph {
+            display: block;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .psychology .result-paragraph {
+            border-left-color: rgba(187, 134, 252, 0.3);
+        }
+
+        .prophecy .result-paragraph {
+            border-left-color: rgba(212, 175, 55, 0.3);
+        }
+
+        /* 메인 제목 - 박스 스타일 */
+        .result-main-title {
+            display: block;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 18px 25px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+        }
+
+        .psychology .result-main-title {
+            background: linear-gradient(135deg, rgba(187, 134, 252, 0.2), rgba(106, 17, 203, 0.15));
+            color: #d4b3ff;
+            border: 1px solid rgba(187, 134, 252, 0.4);
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.2);
+        }
+
+        .prophecy .result-main-title {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(255, 179, 0, 0.15));
+            color: #ffe082;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* 소제목 스타일 */
+        .result-subtitle {
+            display: block;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 28px 0 14px 0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .psychology .result-subtitle {
+            color: #d4b3ff;
+            background: rgba(187, 134, 252, 0.1);
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .prophecy .result-subtitle {
+            color: #ffe082;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        /* 조언/결론 박스 */
+        .result-advice {
+            display: block;
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .psychology .result-advice {
+            background: linear-gradient(135deg, rgba(187, 134, 252, 0.12), rgba(106, 17, 203, 0.08));
+            border: 1px solid rgba(187, 134, 252, 0.25);
+        }
+
+        .prophecy .result-advice {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(255, 179, 0, 0.08));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .result-advice::before {
+            content: '💡';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            font-size: 1.2rem;
+            background: var(--bg-deep);
+            padding: 0 8px;
+        }
+
+        /* 면책조항 */
+        .result-disclaimer {
+            display: block;
+            margin-top: 35px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            font-style: italic;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        /* 구분선 */
+        .result-divider {
+            display: block;
+            width: 80px;
+            height: 2px;
+            margin: 30px auto;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            border-radius: 2px;
+        }
+
+        /* 길몽/흉몽 배지 */
+        .badge-good {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.15));
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.4);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .badge-bad {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(239, 68, 68, 0.15));
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .badge-warning {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.15));
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        /* 에러 메시지 */
+        .error-message {
+            background: rgba(255, 82, 82, 0.2);
+            border: 1px solid rgba(255, 82, 82, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: #ff8a8a;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        /* 애니메이션 유틸 */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .hero-title { 
+                font-size: 2.2rem; 
+                letter-spacing: 3px;
+            }
+            .hero-subtitle { 
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+            }
+            .hero-quote {
+                font-size: 1rem;
+            }
+            .moon {
+                width: 70px;
+                height: 70px;
+                top: 8%;
+                right: 10%;
+            }
+            .dream-text {
+                font-size: 1rem;
+                line-height: 2;
+            }
+            .dream-message-inner {
+                padding: 25px 20px;
+            }
+            .symbol-card {
+                width: 95px;
+                height: 120px;
+            }
+            .symbol-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .symbol-label {
+                font-size: 0.55rem;
+            }
+            .symbol-sublabel {
+                font-size: 0.65rem;
+            }
+            .fusion-connector {
+                padding: 0 5px;
+            }
+            .connector-line {
+                width: 30px;
+            }
+            .fusion-tagline {
+                font-size: 0.8rem;
+                margin-top: 25px;
+            }
+            .section-intro h2 { font-size: 1.4rem; }
+            .dream-form { padding: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-content { padding: 0 20px; padding-bottom: 100px; }
+            .dream-message { margin-top: 35px; }
+            .dream-message-inner { padding: 20px 15px; }
+            .dream-text { 
+                font-size: 0.9rem; 
+                line-height: 1.9;
+            }
+            .fusion-section { margin-top: 40px; }
+            .fusion-container { gap: 12px; }
+            .symbol-card {
+                width: 85px;
+                height: 110px;
+            }
+            .symbol-icon {
+                width: 32px;
+                height: 32px;
+            }
+            .connector-line { width: 20px; }
+            .connector-symbol { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         히어로 섹션 - 몽환적인 첫 화면
+    ========================================== -->
+    <section class="hero">
+        <!-- 별 배경 -->
+        <div class="stars" id="stars"></div>
+        
+        <!-- 달 -->
+        <div class="moon"></div>
+
+        <!-- 떠다니는 입자 -->
+        <div class="particles" id="particles"></div>
+
+        <!-- 히어로 콘텐츠 -->
+        <div class="hero-content">
+            <h1 class="hero-title">Morpheus Twin</h1>
+            <p class="hero-subtitle">무의식의 지도와 미래의 나침반</p>
+            
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-symbol">☽</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="hero-description">
+                <p class="hero-quote">"꿈은 무의식으로 가는 왕도(王道)이다"</p>
+                <p class="hero-author">— 카를 융</p>
+                
+            </div>
+
+            <!-- 몽환적 메시지 섹션 -->
+            <div class="dream-message">
+                <div class="dream-message-inner">
+                    <p class="dream-text">
+                        <span class="line">매일 밤 펼쳐지는 <span class="glow-word">꿈</span>의 장막 속에</span>
+                        <span class="line">당신의 <span class="highlight">내면이 속삭이는 비밀</span>이 잠들어 있습니다</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 융합 섹션 - 재디자인 -->
+            <div class="fusion-section">
+                <div class="fusion-container">
+                    <!-- 심리학 심볼 -->
+                    <div class="symbol-card psychology">
+                        <div class="symbol-card-inner">
+                            <div class="symbol-aura"></div>
+                            <div class="symbol-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="8" r="4"/>
+                                    <path d="M12 12c-4 0-7 2-7 5v2h14v-2c0-3-3-5-7-5z"/>
+                                    <path d="M12 3v-1M8 5l-1-1M16 5l1-1" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span class="symbol-label">Psychology</span>
+                            <span class="symbol-sublabel">심리</span>
+                        </div>
+                    </div>
+
+                    <!-- 연결 요소 -->
+                    <div class="fusion-connector">
+                        <div class="connector-line"></div>
+                        <span class="connector-symbol">∞</span>
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <!-- 운세 심볼 -->
+                    <div class="symbol-card fortune">
+                        <div class="symbol-card-inner">
+                            <div class="symbol-aura"></div>
+                            <div class="symbol-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="8"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke-linecap="round"/>
+                                    <path d="M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span class="symbol-label">Fortune</span>
+                            <span class="symbol-sublabel">운명</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="fusion-tagline"><span>두 세계의 지혜가 만나다</span></p>
+            </div>
+        </div>
+
+        <!-- 스크롤 인디케이터 -->
+        <div class="scroll-indicator" onclick="scrollToForm()">
+            <span>SCROLL</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         메인 섹션 - 입력 폼 & 결과
+    ========================================== -->
+    <section class="main-section" id="form-section">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+
+        <div class="container">
+            <div class="section-intro">
+                <h2>꿈을 기록하세요</h2>
+                <p>기억나는 모든 것을 적어주세요. 작은 단서도 큰 의미를 담고 있습니다.</p>
+            </div>
+
+            <main>
+                <section id="input-section" class="dream-form">
+                    <div class="form-group">
+                        <label>✨ 꿈의 줄거리</label>
+                        <textarea id="dream-story" rows="4" placeholder="어젯밤 꿈 내용을 최대한 자세히 기록해주세요."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>🗝️ 핵심 상징물</label>
+                        <textarea id="dream-symbols" rows="2" placeholder="기억에 남는 물건, 동물, 색깔, 숫자 등"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>🌊 꿈속 감정 & 현재 상황</label>
+                        <textarea id="dream-emotion" rows="3" placeholder="꿈에서 느낀 감정과 최근 고민거리"></textarea>
+                    </div>
+                    <button id="analyze-btn" class="btn-analyze" onclick="startAnalysis()">무의식의 문 열기</button>
+                    <div id="error-message" class="error-message"></div>
+                </section>
+
+                <section id="loading">
+                    <div class="spinner"></div>
+                    <p style="color: var(--accent-gold); letter-spacing: 1px;">별들의 위치를 계산하고 무의식의 심연을 들여다봅니다...</p>
+                </section>
+
+                <section id="result">
+                    <div class="result-card psychology">
+                        <h2 class="result-title">🧠 무의식의 심리 분석</h2>
+                        <div id="psychology-content" class="result-content"></div>
+                    </div>
+
+                    <div class="result-card prophecy">
+                        <h2 class="result-title">🔮 미래 예언적 해석</h2>
+                        <div id="prophecy-content" class="result-content"></div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn-analyze" style="background: transparent; border: 1px solid var(--accent-purple);" onclick="resetForm()">다른 꿈 기록하기</button>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>Morpheus Twin은 당신의 꿈을 응원합니다.<br>이 해석은 상징적 의미일 뿐, 운명은 당신의 선택으로 만들어집니다.</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        // ============================================
+        // 별 생성
+        // ============================================
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 120;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 2.5 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = Math.random() * 5 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // ============================================
+        // 떠다니는 입자 생성
+        // ============================================
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                const colors = [
+                    'rgba(187, 134, 252, 0.5)',
+                    'rgba(212, 175, 55, 0.4)',
+                    'rgba(37, 117, 252, 0.35)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // ============================================
+        // 스크롤 함수
+        // ============================================
+        function scrollToForm() {
+            document.getElementById('form-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // 초기화
+        createStars();
+        createParticles();
+
+        // ============================================
+        // API 설정 (Vercel Serverless Function)
+        // ============================================
+        // 배포 후에는 상대 경로 사용, 로컬에서는 직접 Gemini 호출
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const DREAM_API_URL = '/api/analyze';
+
+        // DOM 요소 캐싱
+        const inputSection = document.getElementById('input-section');
+        const loadingSection = document.getElementById('loading');
+        const resultSection = document.getElementById('result');
+        const errorMessage = document.getElementById('error-message');
+        const analyzeBtn = document.getElementById('analyze-btn');
+
+        const dreamStory = document.getElementById('dream-story');
+        const dreamSymbols = document.getElementById('dream-symbols');
+        const dreamEmotion = document.getElementById('dream-emotion');
+
+        const psychologyContent = document.getElementById('psychology-content');
+        const prophecyContent = document.getElementById('prophecy-content');
+
+        /**
+         * 입력값 유효성 검사
+         */
+        function validateInput() {
+            const story = dreamStory.value.trim();
+            const symbols = dreamSymbols.value.trim();
+            const emotion = dreamEmotion.value.trim();
+
+            if (!story && !symbols && !emotion) {
+                showError("꿈의 파편을 조금이라도 기록해주셔야 분석할 수 있습니다.");
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * 에러 메시지 표시
+         */
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        /**
+         * 화면 전환 함수
+         */
+        function showSection(section) {
+            inputSection.style.display = 'none';
+            loadingSection.style.display = 'none';
+            resultSection.style.display = 'none';
+
+            if (section === 'input') inputSection.style.display = 'block';
+            else if (section === 'loading') loadingSection.style.display = 'block';
+            else if (section === 'result') resultSection.style.display = 'block';
+        }
+
+        /**
+         * 꿈 분석 시작
+         */
+        async function startAnalysis() {
+            if (!validateInput()) return;
+
+            showSection('loading');
+            analyzeBtn.disabled = true;
+
+            const dreamData = {
+                story: dreamStory.value.trim(),
+                symbols: dreamSymbols.value.trim(),
+                emotion: dreamEmotion.value.trim()
+            };
+
+            try {
+                const result = await callDreamAPI(dreamData);
+                displayResult(result);
+                showSection('result');
+                document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('분석 오류:', error);
+                showSection('input');
+                showError(error.message || '분석 중 오류가 발생했습니다. 다시 시도해주세요.');
+            } finally {
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        /**
+         * 꿈 분석 API 호출
+         */
+        async function callDreamAPI(dreamData) {
+            try {
+                const response = await fetch(DREAM_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dreamData)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('API 오류 상세:', errorData);
+                    throw new Error(errorData.error || `API 오류: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                return {
+                    psychology: result.psychology || '심리 분석 결과를 불러올 수 없습니다.',
+                    prophecy: result.prophecy || '예언적 해석을 불러올 수 없습니다.'
+                };
+
+            } catch (error) {
+                console.error('API 호출 실패:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * 결과 표시 함수
+         */
+        function displayResult(result) {
+            psychologyContent.innerHTML = formatResultText(result.psychology, 'psychology') || '심리 분석 결과를 불러올 수 없습니다.';
+            prophecyContent.innerHTML = formatResultText(result.prophecy, 'prophecy') || '예언적 해석을 불러올 수 없습니다.';
+        }
+
+        /**
+         * 결과 텍스트 포맷팅 함수
+         */
+        function formatResultText(text, type) {
+            if (!text) return '';
+
+            let formatted = text;
+
+            // 0. 기존 HTML 태그 이스케이프 방지를 위해 <strong> 태그 보존
+            // (Gemini가 이미 <strong> 태그를 넣었을 수 있음)
+
+            // 1. **마크다운 강조**를 <strong>으로 변환 (가장 먼저)
+            formatted = formatted.replace(
+                /\*\*([^*]+)\*\*/g,
+                '<strong>$1</strong>'
+            );
+
+            // 2. 메인 제목 감지 (첫 줄이나 "제목:" 패턴)
+            // "당신 무의식의 비밀 지도" 같은 형태
+            formatted = formatted.replace(
+                /^["「『]([^"」』\n]+)["」』]/gm,
+                '<span class="result-main-title">$1</span>'
+            );
+
+            // 제목: 형태
+            formatted = formatted.replace(
+                /^제목:\s*["「『]?([^"」』\n]+)["」』]?$/gm,
+                '<span class="result-main-title">$1</span>'
+            );
+
+            // 3. 소제목 패턴들
+            // ■, ●, ▶, ◆, ★ 등으로 시작
+            formatted = formatted.replace(
+                /^[■●▶◆◇★☆►▪•]\s*(.+)$/gm,
+                '<span class="result-subtitle">$1</span>'
+            );
+
+            // 【제목】 형태
+            formatted = formatted.replace(
+                /【([^】]+)】/g,
+                '<span class="result-subtitle">$1</span>'
+            );
+
+            // [제목] 형태
+            formatted = formatted.replace(
+                /^\[([^\]]+)\]$/gm,
+                '<span class="result-subtitle">$1</span>'
+            );
+
+            // 숫자. **제목** 또는 숫자. 제목
+            formatted = formatted.replace(
+                /^(\d+)\.\s*<strong>([^<]+)<\/strong>/gm,
+                '<span class="result-subtitle">$1. $2</span>'
+            );
+
+            formatted = formatted.replace(
+                /^(\d+)\.\s+([가-힣]+[가-힣\s]*:)/gm,
+                '<span class="result-subtitle">$1. $2</span>'
+            );
+
+            // "### 제목" 마크다운 헤더
+            formatted = formatted.replace(
+                /^#{1,3}\s+(.+)$/gm,
+                '<span class="result-subtitle">$1</span>'
+            );
+
+            // 4. 길몽/흉몽/경고몽 배지
+            formatted = formatted.replace(
+                /(길몽|吉夢)/g,
+                '<span class="badge-good">$1</span>'
+            );
+            formatted = formatted.replace(
+                /(흉몽|凶夢)/g,
+                '<span class="badge-bad">$1</span>'
+            );
+            formatted = formatted.replace(
+                /(경고몽|警告夢)/g,
+                '<span class="badge-warning">$1</span>'
+            );
+
+            // 5. 조언/결론 영역 감지
+            formatted = formatted.replace(
+                /^(결론 및[^:\n]*:|심리적 조언:|행동 지침:|조언:)\s*/gm,
+                '<span class="result-advice"><strong>$1</strong> '
+            );
+
+            // 6. 면책조항
+            formatted = formatted.replace(
+                /(이 해석은 꿈의 상징과[^.]*\.)/g,
+                '<span class="result-disclaimer">$1</span>'
+            );
+            formatted = formatted.replace(
+                /(최종적인 선택과 판단은[^.]*\.)/g,
+                '<span class="result-disclaimer">$1</span>'
+            );
+
+            // 7. 구분선
+            formatted = formatted.replace(
+                /^[-─━=]{3,}$/gm,
+                '<span class="result-divider"></span>'
+            );
+            formatted = formatted.replace(
+                /^\*{3,}$/gm,
+                '<span class="result-divider"></span>'
+            );
+
+            // 8. 빈 줄을 문단 구분으로
+            formatted = formatted.replace(/\n\n+/g, '</p><p>');
+            formatted = '<p>' + formatted + '</p>';
+            formatted = formatted.replace(/<p><\/p>/g, '');
+
+            // 9. 단일 줄바꿈을 <br>로
+            formatted = formatted.replace(/\n/g, '<br>');
+
+            return formatted;
+        }
+
+        /**
+         * 폼 초기화 및 재시작
+         */
+        function resetForm() {
+            dreamStory.value = '';
+            dreamSymbols.value = '';
+            dreamEmotion.value = '';
+            showSection('input');
+            document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
