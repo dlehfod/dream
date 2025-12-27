@@ -912,43 +912,62 @@
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
+            .hero {
+                min-height: 100vh;
+                padding-top: 60px;
+            }
+            .hero-content {
+                padding: 0 20px;
+                padding-bottom: 100px;
+            }
             .hero-title { 
-                font-size: 2.2rem; 
-                letter-spacing: 3px;
+                font-size: 2rem; 
+                letter-spacing: 2px;
+                margin-top: 20px;
             }
             .hero-subtitle { 
-                font-size: 0.95rem;
-                letter-spacing: 2px;
+                font-size: 0.85rem;
+                letter-spacing: 1px;
             }
             .hero-quote {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
             .moon {
-                width: 70px;
-                height: 70px;
-                top: 8%;
-                right: 10%;
+                width: 60px;
+                height: 60px;
+                top: 5%;
+                right: 8%;
+            }
+            .divider {
+                margin-bottom: 25px;
+            }
+            .dream-message {
+                margin-top: 30px;
             }
             .dream-text {
-                font-size: 1rem;
-                line-height: 2;
+                font-size: 0.95rem;
+                line-height: 1.9;
             }
             .dream-message-inner {
-                padding: 25px 20px;
+                padding: 20px 15px;
+            }
+            .fusion-section {
+                margin-top: 35px;
             }
             .symbol-card {
-                width: 95px;
-                height: 120px;
+                width: 90px;
+                height: 115px;
             }
             .symbol-icon {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
             }
             .symbol-label {
-                font-size: 0.55rem;
+                font-size: 0.5rem;
+                letter-spacing: 1.5px;
             }
             .symbol-sublabel {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
             }
             .fusion-connector {
                 padding: 0 5px;
@@ -965,26 +984,79 @@
         }
 
         @media (max-width: 480px) {
-            .hero-title { font-size: 1.8rem; }
-            .hero-content { padding: 0 20px; padding-bottom: 100px; }
-            .dream-message { margin-top: 35px; }
-            .dream-message-inner { padding: 20px 15px; }
-            .dream-text { 
-                font-size: 0.9rem; 
-                line-height: 1.9;
+            .hero {
+                padding-top: 50px;
             }
-            .fusion-section { margin-top: 40px; }
-            .fusion-container { gap: 12px; }
+            .hero-content { 
+                padding: 0 15px; 
+                padding-bottom: 80px; 
+            }
+            .hero-title { 
+                font-size: 1.6rem; 
+                letter-spacing: 1px;
+                margin-top: 15px;
+            }
+            .hero-subtitle {
+                font-size: 0.75rem;
+                margin-bottom: 30px;
+            }
+            .hero-quote {
+                font-size: 0.85rem;
+            }
+            .hero-author {
+                font-size: 0.75rem;
+                margin-bottom: 25px;
+            }
+            .divider {
+                margin-bottom: 20px;
+            }
+            .divider-line {
+                width: 40px;
+            }
+            .moon {
+                width: 50px;
+                height: 50px;
+                top: 3%;
+                right: 5%;
+            }
+            .dream-message { margin-top: 25px; }
+            .dream-message-inner { padding: 15px 12px; }
+            .dream-text { 
+                font-size: 0.85rem; 
+                line-height: 1.8;
+            }
+            .fusion-section { margin-top: 30px; }
+            .fusion-container { gap: 8px; }
             .symbol-card {
-                width: 85px;
-                height: 110px;
+                width: 80px;
+                height: 100px;
+            }
+            .symbol-card-inner {
+                gap: 8px;
             }
             .symbol-icon {
-                width: 32px;
-                height: 32px;
+                width: 28px;
+                height: 28px;
             }
-            .connector-line { width: 20px; }
-            .connector-symbol { font-size: 0.85rem; }
+            .symbol-label {
+                font-size: 0.45rem;
+            }
+            .symbol-sublabel {
+                font-size: 0.55rem;
+            }
+            .connector-line { width: 15px; }
+            .connector-symbol { font-size: 0.75rem; }
+            .fusion-tagline {
+                font-size: 0.7rem;
+                margin-top: 20px;
+            }
+            .scroll-indicator span {
+                font-size: 0.6rem;
+            }
+            .scroll-arrow {
+                width: 18px;
+                height: 18px;
+            }
         }
     </style>
 </head>
